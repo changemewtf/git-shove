@@ -1,3 +1,5 @@
 # git-shove
 
-For quickly making remote repos of an existing local repo
+For quickly making remote repos of an existing local repo.
+
+Nice!
