@@ -12,13 +12,12 @@ module GitShove
 
             remote_commands = [
                 "git init --bare --shared=group #{repo_dir}",
-                "cd #{repo_dir}",
-                "chgrp -R #{DEFAULT_GROUP_NAME} .",
-                "chmod -R g+w .",
-                "chmod g+s `find . -type d`"
-            ].join(' && ')
+                "chgrp -R #{DEFAULT_GROUP_NAME} #{repo_dir}",
+                "chmod -R g+w #{repo_dir}",
+                "find #{repo_dir} -type d -print0 | xargs -0 chmod g+s"
+            ].join(" && ")
 
-            try("ssh #{hostname} #{remote_commands}")
+            try(%Q[ssh #{hostname} "#{remote_commands}"])
 
             remote_url = "#{hostname}:#{repo_dir}"
 
@@ -30,7 +29,7 @@ module GitShove
 
         def try(cmd)
             puts(cmd)
-            puts(%x(#{cmd}))
+            puts(%x[#{cmd}])
         end
 
     end
