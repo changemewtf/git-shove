@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'git-shove'
+
+GitShove::Shover.new().shove(ARGV[0])
